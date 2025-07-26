@@ -1,0 +1,21 @@
+#big_data_analysis.py
+
+from pyspark.sql import SparkSession
+
+# Start Spark Session
+spark = SparkSession.builder.appName("BigDataAnalysis").getOrCreate()
+
+# Load large dataset (example: CSV)
+df = spark.read.csv("data/large_dataset.csv", header=True, inferSchema=True)
+
+# Basic analysis
+df.printSchema()
+df.describe().show()
+df.groupBy("column_name").count().show()
+
+# Save result
+df.groupBy("column_name").count().write.csv("output/grouped_result.csv")
+
+# Stop session
+spark.stop()
+
